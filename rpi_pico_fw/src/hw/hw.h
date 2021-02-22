@@ -17,6 +17,7 @@
 #include "cdc.h"
 #include "uart.h"
 #include "cli.h"
+#include "flash.h"
 
 
 void hwInit(void);

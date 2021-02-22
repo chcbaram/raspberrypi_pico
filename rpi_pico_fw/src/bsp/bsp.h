@@ -21,6 +21,17 @@
 #include "pico/time.h"
 
 
+ __attribute__((always_inline)) static inline void __enable_irq(void)
+{
+   __asm volatile ("cpsie i" : : : "memory");
+}
+
+ __attribute__((always_inline)) static inline void __disable_irq(void)
+{
+   __asm volatile ("cpsid i" : : : "memory");
+}
+
+
 void bspInit(void);
 
 void delay(uint32_t ms);
