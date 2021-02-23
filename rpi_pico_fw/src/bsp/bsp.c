@@ -30,6 +30,8 @@ void bspInit(void)
 
   //freq = CLK_GetHCLKFreq();
   //CLK_EnableSysTick(CLK_CLKSEL0_STCLKSEL_HCLK, CLK_GetHCLKFreq()/1000);
+
+  __enable_irq();
 }
 
 void delay(uint32_t ms)

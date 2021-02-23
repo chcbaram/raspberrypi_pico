@@ -18,9 +18,10 @@
 #define logPrintf(fmt, ...)
 #endif
 
+#include "rp2040.h"
 #include "pico/time.h"
 
-
+/*
  __attribute__((always_inline)) static inline void __enable_irq(void)
 {
    __asm volatile ("cpsie i" : : : "memory");
@@ -30,7 +31,7 @@
 {
    __asm volatile ("cpsid i" : : : "memory");
 }
-
+*/
 
 void bspInit(void);
 

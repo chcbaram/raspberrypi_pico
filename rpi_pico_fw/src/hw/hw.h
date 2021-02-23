@@ -18,6 +18,7 @@
 #include "uart.h"
 #include "cli.h"
 #include "flash.h"
+#include "reset.h"
 
 
 void hwInit(void);
