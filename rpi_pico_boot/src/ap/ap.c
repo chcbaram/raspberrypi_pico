@@ -9,8 +9,54 @@
 
 
 #include "ap.h"
+#include "boot/boot.h"
 
 
+
+
+#if 1
+
+cmd_t cmd;
+
+
+void apInit(void)
+{
+  if (resetGetBootMode() == RESET_MODE_FW)
+  {
+    if (bootVerifyFw() == true && bootVerifyCrc() == true)
+    {
+      bootJumpToFw();
+    }
+  }
+  resetSetBootMode(RESET_MODE_FW);
+
+
+  usbInit();
+
+  cmdInit(&cmd);
+  cmdOpen(&cmd, _DEF_UART1, 57600);
+}
+
+void apMain(void)
+{
+  uint32_t pre_time;
+
+
+  while(1)
+  {
+    if (millis()-pre_time >= 100)
+    {
+      pre_time = millis();
+      ledToggle(_DEF_LED1);
+    }
+
+    if (cmdReceivePacket(&cmd) == true)
+    {
+      bootProcessCmd(&cmd);
+    }
+  }
+}
+#else
 static void cliBoot(cli_args_t *args);
 
 
@@ -76,6 +122,29 @@ void cliBoot(cli_args_t *args)
     ret = true;
   }
 
+  if (args->argc == 1 && args->isStr(0, "test"))
+  {
+    cliPrintf("flash erase\n");
+    flashErase(0x10020000, 512*1024);
+
+
+    cliPrintf("flash write\n");
+
+    uint8_t wr_buf[512];
+
+    for (int i=0; i<512; i++)
+    {
+      wr_buf[i] = i;
+    }
+
+    for (int i=0; i<1024; i++)
+    {
+      flashWrite(0x10020000 + i*512, wr_buf, 512);
+    }
+
+    cliPrintf("flash test end\n");
+  }
+
   if (ret == false)
   {
     cliPrintf("boot info\n");
@@ -83,3 +152,4 @@ void cliBoot(cli_args_t *args)
     cliPrintf("boot jump_fw\n");
   }
 }
+#endif

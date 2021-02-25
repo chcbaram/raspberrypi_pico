@@ -208,6 +208,7 @@ _entry_point:
 
 .type _reset_handler,%function
 .thumb_func
+.global _reset_handler
 _reset_handler:
     // Only core 0 should run the C runtime startup code; core 1 is normally
     // sleeping in the bootrom at this point but check to be sure

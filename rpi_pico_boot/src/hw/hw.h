@@ -19,6 +19,8 @@
 #include "cli.h"
 #include "flash.h"
 #include "reset.h"
+#include "cmd.h"
+#include "util.h"
 
 
 void hwInit(void);

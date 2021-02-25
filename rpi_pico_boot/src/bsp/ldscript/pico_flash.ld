@@ -23,8 +23,9 @@
 
 MEMORY
 {
-    FLASH(rx) : ORIGIN = 0x10000000, LENGTH = 128k
-    RAM(rwx)  : ORIGIN = 0x20000400, LENGTH = 255k
+    FLASH(rx)      : ORIGIN = 0x10000000, LENGTH = 128k        
+    RAM(rwx)       : ORIGIN = 0x20000400, LENGTH = 255k
+    
     SCRATCH_X(rwx) : ORIGIN = 0x20040000, LENGTH = 4k
     SCRATCH_Y(rwx) : ORIGIN = 0x20041000, LENGTH = 4k
 }
@@ -60,9 +61,13 @@ SECTIONS
 
     .text : {
         __logical_binary_start = .;
-        KEEP (*(.vectors))
+        KEEP (*(.vectors))                   
         KEEP (*(.binary_info_header))
         __binary_info_header_end = .;
+        
+    	. = ALIGN(1024);
+    	KEEP(*(.version))         
+        
         KEEP (*(.reset))
         /* TODO revisit this now memset/memcpy/float in ROM */
         /* bit of a hack right now to exclude all floating point and time critical (e.g. memset, memcpy) code from

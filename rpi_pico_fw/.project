@@ -23,4 +23,21 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/common</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/rpi_pico_lib/common</locationURI>
+		</link>
+		<link>
+			<name>src/lib</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/rpi_pico_lib/lib</locationURI>
+		</link>
+		<link>
+			<name>src/hw/driver</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/rpi_pico_lib/hw/driver</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>

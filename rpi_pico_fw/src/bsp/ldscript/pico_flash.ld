@@ -23,8 +23,9 @@
 
 MEMORY
 {
-    FLASH(rx) : ORIGIN = 0x10020000, LENGTH = 1920k
-    RAM(rwx)  : ORIGIN = 0x20000400, LENGTH = 255k
+	FLASH(rx)      : ORIGIN = 0x10020000, LENGTH = 1920k
+    RAM(rwx)       : ORIGIN = 0x20000400, LENGTH = 255k
+    
     SCRATCH_X(rwx) : ORIGIN = 0x20040000, LENGTH = 4k
     SCRATCH_Y(rwx) : ORIGIN = 0x20041000, LENGTH = 4k
 }
@@ -37,6 +38,14 @@ SECTIONS
        and checksummed. It is usually built by the boot_stage2 target
        in the Raspberry Pi Pico SDK
     */
+
+    .tag :
+    {
+      . = ALIGN(4);
+      _flash_tag_addr = .;
+      KEEP(*(.tag)) 
+      . = ALIGN(1024);
+    } >FLASH
 
     .flash_begin : {
         __flash_binary_start = .;
@@ -59,10 +68,15 @@ SECTIONS
     */
 
     .text : {
+        __isr_vector_addr = .;
         __logical_binary_start = .;
-        KEEP (*(.vectors))
+        KEEP (*(.vectors))    
         KEEP (*(.binary_info_header))
         __binary_info_header_end = .;
+        
+        . = ALIGN(1024);
+    	KEEP(*(.version)) 
+    	        
         KEEP (*(.reset))
         /* TODO revisit this now memset/memcpy/float in ROM */
         /* bit of a hack right now to exclude all floating point and time critical (e.g. memset, memcpy) code from

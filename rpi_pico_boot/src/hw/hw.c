@@ -12,6 +12,11 @@
 
 
 
+__attribute__((section(".version"))) firm_version_t boot_ver =
+    {
+        "B210224R1",
+        "Bootloader"
+    };
 
 
 void hwInit(void)
@@ -19,15 +24,10 @@ void hwInit(void)
   bspInit();
   resetInit();
 
-  if (resetGetBootMode() == RESET_MODE_FW)
-  {
-    hwJumpFw();
-  }
 
   cliInit();
   ledInit();
   uartInit();
-  usbInit();
   flashInit();
 }
 
