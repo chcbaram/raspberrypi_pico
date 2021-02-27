@@ -17,15 +17,24 @@ static bool is_init = false;
 
 
 extern void stdio_write(const char *buf, int length);
-extern uint32_t stdio_available(void);
-extern uint8_t stdio_read(void);
 
+//extern uint32_t CDC_Itf_GetBaud(void);
+//extern uint32_t CDC_Itf_TxAvailable( void );
+extern uint32_t CDC_Itf_RxAvailable( void );
+//extern int32_t  CDC_Itf_Write( uint8_t *p_buf, uint32_t length );
+//extern uint8_t  CDC_Itf_Getch( void );
+extern uint8_t  CDC_Itf_Read( void );
+//extern uint32_t CDC_Itf_TxBufLengh( void );
+//extern bool CDC_Itf_IsConnected(void);
+//extern void CDC_Itf_Flush( void );
+extern void CDC_Itf_Init(void);
 
 
 bool cdcInit(void)
 {
   bool ret = true;
 
+  CDC_Itf_Init();
 
   is_init = true;
 
@@ -39,12 +48,14 @@ bool cdcIsInit(void)
 
 uint32_t cdcAvailable(void)
 {
-  return stdio_available();
+  //return stdio_available();
+  return CDC_Itf_RxAvailable();
 }
 
 uint8_t cdcRead(void)
 {
-  return stdio_read();
+  //return stdio_read();
+  return CDC_Itf_Read();
 }
 
 uint32_t cdcWrite(uint8_t *p_data, uint32_t length)

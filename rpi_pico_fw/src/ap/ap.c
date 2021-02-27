@@ -45,7 +45,6 @@ void cliBoot(cli_args_t *args)
   {
     cliPrintf("firmware\n");
     cliPrintf("boot mode  : 0x%X\n", resetGetBootMode());
-
     ret = true;
   }
 

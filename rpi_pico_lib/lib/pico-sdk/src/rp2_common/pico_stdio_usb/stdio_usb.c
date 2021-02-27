@@ -15,6 +15,7 @@
 #include "pico/mutex.h"
 
 extern void resetISR(void);
+extern void cdcd_sof(uint8_t rhport);
 
 static_assert(PICO_STDIO_USB_LOW_PRIORITY_IRQ > RTC_IRQ, ""); // note RTC_IRQ is currently the last one
 static mutex_t stdio_usb_mutex;
@@ -24,6 +25,7 @@ static void low_priority_worker_irq() {
     // until the next tick; we won't starve
     if (mutex_try_enter(&stdio_usb_mutex, NULL)) {
         tud_task();
+        cdcd_sof(0);
         mutex_exit(&stdio_usb_mutex);
     }
 
