@@ -6,3 +6,4 @@ elf2uf2/Debug/
 pico_fw/.settings/language.settings.xml
 rpi_pico_fw/.settings/language.settings.xml
 rpi_pico_boot/.settings/language.settings.xml
+rpi_pico_rtos/.settings/language.settings.xml
