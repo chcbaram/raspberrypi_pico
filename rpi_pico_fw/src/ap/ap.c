@@ -17,6 +17,8 @@ void apInit(void)
 {
   cliOpen(_DEF_UART1, 57600);
   cliAdd("boot", cliBoot);
+
+  uartOpen(_DEF_UART2, 921600);
 }
 
 void apMain(void)
@@ -33,6 +35,11 @@ void apMain(void)
     }
 
     cliMain();
+
+    if (uartAvailable(_DEF_UART2) > 0)
+    {
+      uartPrintf(_DEF_UART2, "Rx UART2 : 0x%X\n", uartRead(_DEF_UART2));
+    }
   }
 }
 
